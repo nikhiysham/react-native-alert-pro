@@ -52,10 +52,24 @@ class AlertPro extends Component {
   }
 
   animatedConfirm() {
-    Animated.spring(this.springValue, {
-      toValue: 1,
-      speed: 15
-    }).start();
+    const { type, friction, tension, speed, velocity, bounciness } = this.props
+
+    if (type === 'friction') {
+      Animated.spring(this.springValue, {
+        toValue: 1,
+        friction,
+        tension,
+        velocity
+      }).start();
+    } else {
+      Animated.spring(this.springValue, {
+        toValue: 1,
+        speed,
+        bounciness,
+        velocity
+      }).start();
+    }
+
   }
 
   render() {
@@ -78,7 +92,7 @@ class AlertPro extends Component {
         transparent
         animationType="fade"
         supportedOrientations={SUPPORTED_ORIENTATIONS}
-        onRequestClose={() => {}}
+        onRequestClose={() => { }}
       >
         <TouchableOpacity
           activeOpacity={1}
@@ -155,7 +169,11 @@ AlertPro.defaultProps = {
   closeOnPressMask: true,
   onCancel: null,
   onConfirm: null,
-  onClose: null
+  onClose: null,
+  type: 'bouncy',
+  bounciness: 20,
+  velocity: 1,
+  speed: 5
 };
 
 export default AlertPro;
