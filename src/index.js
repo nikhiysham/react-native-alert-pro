@@ -81,7 +81,8 @@ class AlertPro extends Component {
       textCancel,
       textConfirm,
       customStyles,
-      closeOnPressMask
+      closeOnPressMask,
+      showContent
     } = this.props;
 
     const { visible } = this.state;
@@ -109,12 +110,16 @@ class AlertPro extends Component {
             ]}
           >
             <TouchableOpacity activeOpacity={1}>
-              <View style={styles.content}>
-                <Text style={[styles.title, customStyles.title]}>{title}</Text>
-                {message ? (
-                  <Text style={[styles.message, customStyles.message]}>{message}</Text>
-                ) : null}
-              </View>
+              {showContent ?
+                <View style={styles.content}>
+                  {this.props.children}
+                </View>
+                : <View style={styles.content}>
+                  <Text style={[styles.title, customStyles.title]}>{title}</Text>
+                  {message ? (
+                    <Text style={[styles.message, customStyles.message]}>{message}</Text>
+                  ) : null}
+                </View>}
 
               <View style={styles.buttonContainer}>
                 {showCancel ? (
@@ -173,7 +178,8 @@ AlertPro.defaultProps = {
   type: 'bouncy',
   bounciness: 20,
   velocity: 1,
-  speed: 5
+  speed: 5,
+  showContent: false
 };
 
 export default AlertPro;
